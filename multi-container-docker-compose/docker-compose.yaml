@@ -1,0 +1,45 @@
+services:
+  mongodb:
+    image: 'mongo'
+    volumes:
+      - data:/data/db
+    environment:
+      # env_files:
+        # - ./.env -> Caso tenha um arquivo com as variaveis de ambiente
+      # - MONGO_INITDB_ROOT_USERNAME=leo
+      MONGO_INITDB_ROOT_USERNAME: leo
+      MONGO_INITDB_ROOT_PASSWORD: palmeiras
+    #networks:
+       # docker compose cria uma rede para todos os containers do arquivo
+       # - multi-container -> caso queira que adicione mais uma rede alem da default criada pelo compose
+  backend:
+    build: ./backend
+    # build: -> Maneira mais longa 
+    #  context: ./backend
+    #  dockerfile: Dockerfile
+    ports:
+      - '80:80'
+    volumes: 
+      - logs:/app/logs  
+      - ./backend:/app
+      - /app/node_modules
+    env_file:
+      - ./env/backend.env
+    depends_on: # Indica que esse container precisa do mongodb para funcionar
+      - mongodb 
+  frontend:
+    build: ./frontend
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./frontend/src:/app/src
+    # stdin_open e tty refere-se a iniciação no modo de interação '-it'  
+    stdin_open: true
+    tty: true  
+    depends_on:
+      - backend
+    
+# Volumes nomeados utilizados nos container deve ser listado abaixo:    
+volumes:
+  data:
+  logs:     
