@@ -1,0 +1,21 @@
+services:
+  mongodb:
+    image: 'mongo'
+    volumes:
+      - data:/data/db
+    environment:
+      # env_files:
+        # - ./.env -> Caso tenha um arquivo com as variaveis de ambiente
+      # - MONGO_INITDB_ROOT_USERNAME=leo
+      MONGO_INITDB_ROOT_USERNAME: leo
+      MONGO_INITDB_ROOT_PASSWORD: palmeiras
+    #networks:
+       # docker compose cria uma rede para todos os containers do arquivo
+       # - multi-container -> caso queira que adicione mais uma rede alem da default criada pelo compose
+  backend:
+    
+  frontend:
+    
+# Volumes nomeados utilizados nos container deve ser listado abaixo:    
+volumes:
+  data:     
