@@ -1,0 +1,3 @@
+COMANDOS
+
+docker-compose run --rm nodeutility init
