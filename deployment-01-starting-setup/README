@@ -1,0 +1,27 @@
+FRIST: Access remote machine and install the Docker there.
+
+1: Create a reposity in docker hub
+2: Build the image with app datas from Dockerfile and after run the command with same name reposity to create a new image with reposity name
+3: Send the image to reposity
+4: Open the aws with ssh, do login and after run the command to pull a image from docker run to aws server
+    - sudo docker run -d --rm -p 80:80 leonardosuave/node-deploy-exemple-1
+5: Go to Security Group in EC2 aws and add allow to access in Inbound rules
+    Select HTTP -> port 80 and anywhere
+    Now you can access using the Public IPV4 IP
+
+6: Update datas in local machine and push to remote machine
+    Build a new image in local machine
+        - docker build -t node-deploy-exemple-1-updated .
+    Create a new image to reposity with new image updated
+        - docker tag node-deploy-exemple-1-updated leonardosuave/node-deploy-exemple-1
+    Push the updated image to Docker Hub
+        - docker push leonardosuave/node-deploy-exemple-1
+    Update the image in remote machine
+        Stop the current container runing
+            - sudo docker ps
+            - sudo docker stop 'name container'
+        Run again the image from Docker Hub to get a new container updated
+            - sudo docker pull leonardosuave/node-deploy-exemple-1 -> To update image and not use image in cache
+            - sudo docker run -d --rm -p 80:80 leonardosuave/node-deploy-exemple-1
+
+7: To turn off (delete) the EC2 server go to Instances, select the instance that you want turning off and go to Actions and Instance State or Manage instance state and Terminate         
