@@ -1,0 +1,22 @@
+1 - Create the app image
+    docker build -t 'name' .
+
+2 - Push the image to reposity (Docker hub)
+    docker tag 'image name' 'reposity name'
+    docker push 'reposity name'
+
+3 - Start virtual machine (create  a new container to minikube)
+    minikube Start
+
+4 - Send instruction to minikube to menager the clusters
+    4.1 - create object deployment
+        kubectl create deployment 'deployment name' --image='reposity name'
+
+5 - Check object created
+    kubectl get deployment
+    kubectl get pods
+    minikube dashboard
+
+To create a cluster by a configurate file -> file.yaml
+    create a file .yaml and create the configurate
+    kubectl apply -f=deployment.yaml

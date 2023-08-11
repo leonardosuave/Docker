@@ -1,0 +1,22 @@
+apiVersion: apps/v1  #  Must have a version -> search on google to find examples
+kind: Deployment     #  Type kubernetes object want to create (Service, Job....)
+metadata:
+  name: second-app-deployment   # deployment name -> you choise the name
+spec: # spec to Deployment
+  replicas: 1 # Quantity PODs will have with same container
+  selector: # Identify all PODs that application can controll by selector
+    matchLabels:  # Identify by app and tier name whats PODs will be controll by this Deployment -> The Pods must have this app and tier names
+      app: second-app
+      tier: backend 
+  template:
+    #kind: Pod -> Isnt neccessary because the template will be a POD to kind: Deployment   
+    metadata: 
+      labels: # The labels you choise the names 
+        app: second-app
+        tier: backend
+    spec: # spec to the PODs    
+      containers: 
+        - name: second-node # -> you choise the name container
+          image: leonardosuave/kub-first-deploy # image from docker hub with application
+        # - name: second-node # -> you choise the name container
+        #  image:
