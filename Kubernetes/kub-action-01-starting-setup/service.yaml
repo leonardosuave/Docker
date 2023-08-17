@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  labels:
+    group: example
+spec:
+  selector:
+    app: second-app
+  ports:
+    - protocol: 'TCP' # Default
+      port: 80  # container port
+      targetPort: 8080  # world port
+    # - protocol: 'TCP'  If has more port to expose
+    #  port: 443
+    #  targetPort: 443
+  type: LoadBalancer  #ClusterIp = Default IP, accessily only in cluster; NodePort = expose in IP and port app; LoadBalancer = to access external world

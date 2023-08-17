@@ -18,5 +18,28 @@
     minikube dashboard
 
 To create a cluster by a configurate file -> file.yaml
+    first the minikube container need to be running - minikube start
+
     create a file .yaml and create the configurate
     kubectl apply -f=deployment.yaml
+
+To run the cluster created
+    1 - Create a deployment by a file
+    2 - Create a service by a file to expose the app
+    3 - Get name service created
+        kubectl get services
+    4 - Run the following command to see app on navegator    
+     minikube service 'name service'
+
+To update resources
+    1 - You need to do the changes in file.yaml and after run the command to create the object
+
+To delete resources
+    1 - To delete by kind resource and name resource
+        kubectl delete 'deployment' 'name'
+    2 - To delete by name file
+        kubectl delete -f=name.yaml
+    2 - To delete by labels group
+        In metadata add labels and after group that receive a name; it between files need to have the same name in group
+            kubectl delete deployments,services -l group='name'
+                This command will delete all resource with same name in group, or pass the kind of resource like 'deployment' and 'services' to delete only this kind resources with this group name                 

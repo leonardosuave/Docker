@@ -1,17 +1,29 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+spec:
+  selector:
+    app: second-app
+  ports:
+    - protocol: 'TCP' # Default
+      port: 80  # container port
+      targetPort: 8080  # world port
+    # - protocol: 'TCP'  If has more port to expose
+    #  port: 443
+    #  targetPort: 443
+  type: LoadBalancer  #ClusterIp = Default IP, accessily only in cluster; NodePort = expose in IP and port app; LoadBalancer = to access external world
+---
 apiVersion: apps/v1  #  Must have a version -> search on google to find examples
 kind: Deployment     #  Type kubernetes object want to create (Service, Job....)
 metadata:
   name: second-app-deployment   # deployment name -> you choise the name
-  labels:
-    group: example
 spec: # spec to Deployment
   replicas: 1 # Quantity PODs will have with same container
   selector: # Identify all PODs that application can controll by selector
     matchLabels:  # Identify by app and tier name whats PODs will be controll by this Deployment -> The Pods must have this app and tier names
       app: second-app
-      tier: backend
-    # matchExpressions:
-    #  - {key: app, operator: In, values: [second-app, first-app]} 
+      tier: backend 
   template:
     #kind: Pod -> Isnt neccessary because the template will be a POD to kind: Deployment   
     metadata: 
