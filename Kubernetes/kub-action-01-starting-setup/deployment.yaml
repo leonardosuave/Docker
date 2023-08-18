@@ -21,6 +21,13 @@ spec: # spec to Deployment
     spec: # spec to the PODs    
       containers: 
         - name: second-node # -> you choise the name container
-          image: leonardosuave/kub-first-deploy:2 # image from docker hub with application
+          image: leonardosuave/kub-first-deploy:2 # image from docker hub with application; :lastest will pull newest image
         # - name: second-node # -> you choise the name container
         #  image:
+          imagePullPolicy: Always # Will pull newest image when image dont have tag specific
+          livenessProbe:  # The way that container is verify by POD to see if is installed and working
+            httpGet:
+              path: /
+              port: 8080
+            periodSeconds: 10 # frequency that execute this
+            initialDelaySeconds: 5 # time to verify the first time
